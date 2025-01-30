@@ -1,26 +1,30 @@
-body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #2c3e50;
-    color: white;
-    font-family: Arial, sans-serif;
+let score = 0;
+const scoreDisplay = document.getElementById('score');
+const target = document.getElementById('target');
+const gameArea = document.getElementById('gameArea');
+
+function randomPosition() {
+    const x = Math.random() * (gameArea.clientWidth - 50);
+    const y = Math.random() * (gameArea.clientHeight - 50);
+    target.style.left = `${x}px`;
+    target.style.top = `${y}px`;
 }
 
-#gameArea {
-    position: relative;
-    width: 800px;
-    height: 600px;
-    border: 2px solid #ecf0f1;
-    overflow: hidden;
+function showTarget() {
+    target.style.display = 'block';
+    randomPosition();
 }
 
-.target {
-    position: absolute;
-    width: 50px;
-    height: 50px;
-    background-color: red;
-    border-radius: 50%;
-    display: none;
+function hideTarget() {
+    target.style.display = 'none';
 }
+
+target.addEventListener('click', () => {
+    score++;
+    scoreDisplay.textContent = `Score: ${score}`;
+    hideTarget();
+    setTimeout(showTarget, 1000); // Show new target after 1 second
+});
+
+// Start the game
+showTarget();
